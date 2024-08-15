@@ -1,0 +1,82 @@
+{
+  "name": "alwaysontop",
+  "version": "1.0.0",
+  "description": "alwaysontop app for all websites",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "electron .",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder"
+  },
+  "author": "Jainil Prajapati",
+  "license": "ISC",
+  "dependencies": {
+    "electron": "^31.3.1",
+    "electron-builder": "^24.13.3"
+  },
+  "build": {
+    "appId": "com.jps.AOT",
+    "productName": "AlwaysOnTop",
+    "files": [
+      "dist/",
+      "node_modules/",
+      "package.json"
+    ],
+    "directories": {
+      "output": "release"
+    },
+    "win": {
+      "target": "nsis",
+      "icon": "./icon.png"
+    },
+    "mac": {
+      "target": "dmg"
+    },
+
+    "linux": {
+      "target": "AppImage"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "perMachine": true,
+      "runAfterFinish": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true
+    },
+    "dmg": {
+      "contents": [
+        {
+          "x": 410,
+          "y": 150,
+          "type": "link",
+          "path": "/Applications"
+        },
+        {
+          "x": 130,
+          "y": 150,
+          "type": "file"
+        }
+      ],
+      "icon": "./icon.png",
+      "iconSize": 100,
+      "window": {
+        "width": 540,
+        "height": 380
+      }
+    },
+    "appImage": {
+      "artifactName": "${productName}-${version}-${arch}.${ext}",
+      "desktop": {
+        "Name": "AlwaysOnTop",
+        "Type": "Application"
+      },
+      "categories": [
+        "Utility"
+      ],
+      "executableName": "AlwaysOnTop",
+      "icon": "./icon.png"
+    }
+  }
+}

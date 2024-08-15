@@ -1,0 +1,66 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en" style="-webkit-app-region: drag">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="./icon.png" type="image/x-icon">
+    <title>AlwaysOnTop</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 20px;
+      }
+      button {
+        margin: 10px;
+        padding: 10px 20px;
+        font-size: 16px;
+      }
+      input {
+        margin: 10px;
+        padding: 10px;
+        font-size: 16px;
+        width: 300px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Picture-in-Picture Mode App</h1>
+    <button onclick="openPiP('https://www.youtube.com')">YouTube</button>
+    <button onclick="openPiP('https://www.instagram.com')">Instagram</button>
+    <button onclick="openPiP('https://www.netflix.com')">Netflix</button>
+    <br />
+    <input id="custom-url" type="text" placeholder="Enter custom URL" />
+    <button onclick="openCustomPiP()">Open Custom URL</button>
+
+    <script>
+      const { ipcRenderer } = require("electron");
+
+      // Listen for keydown events
+      window.addEventListener("keypress", (e) => {
+        if (e.key === "Delete") {
+          ipcRenderer.send("close-pip");
+        }
+      });
+
+      function openPiP(url) {
+        if (url) {
+          ipcRenderer.send("open-pip", url);
+
+        } else {
+          console.error("Invalid URL");
+        }
+      }
+
+      function openCustomPiP() {
+        const url = document.getElementById("custom-url").value;
+        if (url) {
+          openPiP(url);
+        } else {
+          console.error("Custom URL is empty");
+        }
+      }
+    </script>
+  </body>
+</html>
